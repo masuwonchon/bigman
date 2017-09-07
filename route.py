@@ -54,19 +54,22 @@ def view():
   jsonString = json.dumps(resp.text)
 #  print("jsonString")
 #  print(jsonString)
-  dict = json.loads(resp.text)
+  dic = json.loads(resp.text)
+#  dic = {'date':'', 'high':'0', 'low': '0', 'open': '0', 'close': '0'}
 
   index=0
-  for i in dict:
+  for i in dic:
 #    print(i['date'])
 #    print(time.asctime(time.localtime(i['date'])))
 #    print(dict[index]['date'])
-    dict[index]['date'] = time.asctime(time.localtime(i['date']))
+#    dict[index]['date'] = time.asctime(time.localtime(i['date']))
+#    print (time.asctime(time.localtime(i['date'])))
+    dic[index]['date'] = "170907142500"
     index=index+1
 
-  print "DICT:"+str(dict[0]['date'])
-  print "DICT:"+str(dict[1]['date'])
-  return render_template('view.html', menu=menus, text=dict)
+  print "DICT:"+str(dic[0]['date'])
+  print "DICT:"+str(dic[1]['date'])
+  return render_template('view.html', menu=menus, text=dic)
 
 # main 
 if __name__ == "__main__":
