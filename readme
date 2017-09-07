@@ -1,0 +1,4 @@
+pip install Flask
+pip install flask-mysql
+pip install json2html
+pip install requests
