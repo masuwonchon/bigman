@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>TEST</title>
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="static/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="static/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <link href="static/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<!-- GOOGLE CHART -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    // DATE, LOW, OPEN, CLOSING, HIGH
+    var candle = [];
+    var volume = [];
+	
+    {% for row in text1 %}
+	candle.push(["{{row['date']}}", {{row['low']}}, {{row['open']}}, {{row['close']}}, {{row['high']}}]);
+	volume.push(["{{row['date']}}", {{row['volume']}}]);
+    {% endfor %}
+
+    var candle_data = google.visualization.arrayToDataTable(candle, true);
+    var volume_data = google.visualization.arrayToDataTable(volume, true);
+
+    var options = {
+      legend:'none',
+/*
+      candlestick: {
+        fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+        risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+      }
+*/
+    };
+
+    var CandlestickChart = new google.visualization.CandlestickChart(document.getElementById('chart_div1'));
+    var LineChart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+
+    CandlestickChart.draw(candle_data, options);
+    LineChart.draw(volume_data, options);
+  }
+    </script>
+<!-- END OF GOOGLE CHART -->
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/view">TEST</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+			{% for row in menu %}
+			<li><a href="{{row[0]}}"><i class="{{row[1]}}"></i> {{row[2]}}</a></li>
+			{% endfor %}
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Title</h1>
+    		    <div id="chart_div2" style="width: auto; height: 500px;"></div>
+    		    <div id="chart_div1" style="width: auto; height: 500px;"></div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+       </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="static/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="static/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="static/dist/js/sb-admin-2.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+
+</body>
+
+</html>
